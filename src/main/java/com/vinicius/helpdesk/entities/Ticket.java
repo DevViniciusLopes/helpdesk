@@ -3,9 +3,12 @@ package com.vinicius.helpdesk.entities;
 import java.time.Instant;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 
 @Entity
 public class Ticket {
@@ -16,15 +19,24 @@ public class Ticket {
 	private String title;
 	private String description;
 	private Instant createdAt;
+	@Enumerated(EnumType.STRING)
 	private TicketStatus status;
+	
+	@PrePersist
+	public void setCreatedAt() {
+		 if (createdAt == null) {
+			  this.createdAt = Instant.now();
+		 }
+		 
+	}
 
 	public Ticket() {
 
 	}
 
-	public Ticket(Long id, String title, String description, Instant createdAt, TicketStatus status) {
+	public Ticket(String title, String description, TicketStatus status) {
 		super();
-		this.id = id;
+		
 		this.title = title;
 		this.description = description;
 		this.createdAt = createdAt;

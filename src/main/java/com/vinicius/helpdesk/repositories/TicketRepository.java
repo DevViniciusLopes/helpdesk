@@ -1,5 +1,9 @@
 package com.vinicius.helpdesk.repositories;
 
-public interface TicketRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.vinicius.helpdesk.entities.Ticket;
+
+public interface TicketRepository extends JpaRepository<Ticket, Long>{
 
 }
